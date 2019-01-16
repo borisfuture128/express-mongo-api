@@ -11,6 +11,7 @@ var app = express();
 
 var db = require('./db');
 var url = "mongodb://localhost:27017/";
+var dbname = "mydb";
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +27,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // Connect to Mongo on start
-db.connect('mongodb://localhost:27017/mydb', function(err) {
+db.connect(url, dbname, function(err) {
   if (err) {
     console.log('Unable to connect to Mongo.')
     process.exit(1)
