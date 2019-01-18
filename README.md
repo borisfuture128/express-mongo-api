@@ -25,7 +25,7 @@ Express + MongoDB
       -> show collections   
      ```
      ```
-      -> db.createCollections("customers")   
+      -> db.createCollection("customers")   
      ```
   - have to be ready data.json containing all json data array
   - import data.json into database to execute below command
