@@ -2,6 +2,21 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db');
 
+/* get all data  */
+router.get('/:id', function(req, res, next) {
+  var id = req.params.id;
+  if(id == "all"){
+    var collection = db.get().collection('customers')
+    collection.find().toArray(function(err, docs) {
+      res.json({"result":docs})
+    })
+    return;
+  } else{
+    res.json({message: "Not Found"});
+    return;
+  }
+});
+
 /* GET method */
 router.get('/', function(req, res, next) {
   var RecordType = req.query.RecordType
