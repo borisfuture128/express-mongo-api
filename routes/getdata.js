@@ -48,8 +48,10 @@ router.get('/', function(req, res, next) {
 
 /* POST method */
 router.post('/', function(req, res, next) {
-    var RecordType = req.query.RecordType
-    var DataName = req.query.DataName
+    console.log("------------------------------- req -----------------------------------")
+    console.log(req)
+    var RecordType = req.body.RecordType
+    var DataName = req.body.DataName
     console.log("RecordType:" + RecordType)
     console.log("DataName:" + DataName)
     var collection = db.get().collection('customers')
