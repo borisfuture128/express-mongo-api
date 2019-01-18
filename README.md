@@ -6,23 +6,41 @@ Express + MongoDB
   - download Node for window
   - download mongodb for window
     to check mongodb successfully, open command prompt and execute like below:
-     -> mongodb
+    ```
+    mongodb
+    ```
 2. Setup MongoDB database for our project
   - create database and collection (database name is 'mydb', collection name is 'customers' in our project)
-    open command prompt and execute follow commands
-     -> mongo 
-     -> show dbs 
-     -> use mydb  
-     -> show collections   
-     -> db.createCollections("customers")   
+    open command prompt and execute follow commands:
+     ```
+      mongo 
+     ```
+     ```
+      show dbs 
+     ```
+     ```
+      use mydb  
+     ```
+     ```
+      show collections   
+     ```
+     ```
+      db.createCollections("customers")   
+     ```
   - have to be ready data.json containing all json data array
   - import data.json into database to execute below command
-     -> mongoimport --db mydb --collection customers --type json --file data.json --jsonArray
+     ```
+     > mongoimport --db mydb --collection customers --type json --file data.json --jsonArray
+     ```
 
 3. Setup project
   - just execute below two commands
-     -> npm install     //-------
-     -> npm start       //--------
+    ```
+     -> npm install   
+    ```
+    ```  
+     -> npm start    
+    ```   
   - open broswer and go to http://localhost:3000
 
 
