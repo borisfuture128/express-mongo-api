@@ -33,7 +33,7 @@ Express + MongoDB
      -> mongoimport --db mydb --collection customers --type json --file data.json --jsonArray
      ```
 
-### 3. Setup project
+### 3. Install project
   - just execute below two commands
     ```
      -> npm install   
