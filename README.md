@@ -1,7 +1,7 @@
 Express + MongoDB
 
 ---- Setup project on Windows system -----
-## 1. Make sure already setup Node and Mongo in window OS
+### 1. Make sure already setup Node and MongoDB in window OS
   If Not, you need to install Node and MongoDB
   - download Node for window
   - download mongodb for window
@@ -9,7 +9,7 @@ Express + MongoDB
     ```
     -> mongodb
     ```
-## 2. Setup MongoDB database for our project
+### 2. Setup MongoDB database for our project
   - create database and collection (database name is 'mydb', collection name is 'customers' in our project)
     open command prompt and execute follow commands:
      ```
@@ -33,7 +33,7 @@ Express + MongoDB
      -> mongoimport --db mydb --collection customers --type json --file data.json --jsonArray
      ```
 
-## 3. Setup project
+### 3. Setup project
   - just execute below two commands
     ```
      -> npm install   
