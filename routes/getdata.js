@@ -63,8 +63,6 @@ router.get('/', function(req, res, next) {
 
 /* POST method */
 router.post('/', function(req, res, next) {
-    console.log("------------------------------- req -----------------------------------")
-    console.log(req)
     var RecordType = req.body.RecordType
     var DataName = req.body.DataName
     console.log("RecordType:" + RecordType)
