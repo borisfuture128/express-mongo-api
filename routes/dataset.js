@@ -8,7 +8,7 @@ router.get('/:recordtype', function(req, res, next) {
     if(recordtype != undefined){
       var collection = db.get().collection('customers')
       var pattern = recordtype
-        collection.find( { "RecordType": {$regex:pattern } }).project({_id:0}).toArray(function(err, docs){
+        collection.find( { "recordType": {$regex:pattern } }).project({_id:0}).toArray(function(err, docs){
             console.log(docs)
             res.json({"result":docs})
         })

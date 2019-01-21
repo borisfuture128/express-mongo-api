@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
     console.log('SELECT * FROM collection WHERE RecordType LIKE "%{pattern}%" AND Data.Name LIKE "%{pattern}%"')
     var pattern1 = RecordType
     var pattern2 = DataName
-    collection.find({"RecordType": {$regex:pattern1 }, "Data.Name": {$regex:pattern2}}, {_id:0}).toArray(function(err, docs) {
+    collection.find({"recordType": {$regex:pattern1 }, "Data.Name": {$regex:pattern2}}, {_id:0}).toArray(function(err, docs) {
       console.log(docs)
       res.json({"result":docs})
     })
@@ -40,7 +40,7 @@ router.get('/', function(req, res, next) {
     // SELECT * FROM collection WHERE RecordType LIKE "%{pattern}%"
     console.log('SELECT * FROM collection WHERE RecordType LIKE "%{pattern}%"')
     var pattern = RecordType
-    collection.find( { "RecordType": {$regex:pattern } }).project({_id:0}).toArray(function(err, docs){
+    collection.find( { "recordType": {$regex:pattern } }).project({_id:0}).toArray(function(err, docs){
       console.log(docs)
       res.json({"result":docs})
     })
@@ -73,7 +73,7 @@ router.post('/', function(req, res, next) {
       console.log('SELECT * FROM collection WHERE RecordType LIKE "%{pattern}%" AND Data.Name LIKE "%{pattern}%"')
       var pattern1 = RecordType
       var pattern2 = DataName
-      collection.find({"RecordType": {$regex:pattern1 }, "Data.Name": {$regex:pattern2}}, {_id:0}).toArray(function(err, docs) {
+      collection.find({"recordType": {$regex:pattern1 }, "Data.Name": {$regex:pattern2}}, {_id:0}).toArray(function(err, docs) {
         console.log(docs)
         res.json({"result":docs})
       })
@@ -84,7 +84,7 @@ router.post('/', function(req, res, next) {
       // SELECT * FROM collection WHERE RecordType LIKE "%{pattern}%"
       console.log('SELECT * FROM collection WHERE RecordType LIKE "%{pattern}%"')
       var pattern = RecordType
-      collection.find( { "RecordType": {$regex:pattern } }).project({_id:0}).toArray(function(err, docs){
+      collection.find( { "recordType": {$regex:pattern } }).project({_id:0}).toArray(function(err, docs){
         console.log(docs)
         res.json({"result":docs})
       })
