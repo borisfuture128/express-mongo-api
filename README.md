@@ -1,7 +1,7 @@
 Express + MongoDB
 
-## Installation project on Windows system 
-#### 1. Make sure already setup Node and MongoDB in window OS
+## Install project on Windows system 
+### 1. Make sure already setup Node and MongoDB in window OS
   If Not, you need to install Node and MongoDB
   - download Node for window
   - download mongodb for window
@@ -9,7 +9,7 @@ Express + MongoDB
     ```
     -> mongodb
     ```
-#### 2. Setup MongoDB database for our project
+### 2. Setup MongoDB database for our project
   - create database and collection (database name is 'mydb', collection name is 'customers' in our project)
     open command prompt and execute follow commands:
      ```
@@ -33,7 +33,7 @@ Express + MongoDB
      -> mongoimport --db mydb --collection customers --type json --file data.json --jsonArray
      ```
 
-#### 3. Install project
+### 3. Install project
   - just execute below two commands
     ```
      -> npm install   
@@ -46,7 +46,9 @@ Express + MongoDB
 --------------------------------------------------------------------------------------------------------------
 ## Graphql APIs
   - Go to http://localhost:3000/graphql
+
     You can see Graphiql Interface
+    
     And input below query
     ```  
      {
@@ -59,14 +61,15 @@ Express + MongoDB
     
     ``` 
     And click execute button, this wil get all products that "recordType" is "SalesProducts"
+
     How to test this API in CURL: Open cmd and enter follows:
     ```
-    -> curl -X POST -H "Content-Type:application/json" -d "{\"query\":\"{products(recordType:\\\"SalesProducts\\\"){accountId recordType dateRecorded}}\"}" http://localhost:3000/graphql
+     curl -X POST -H "Content-Type:application/json" -d "{\"query\":\"{products(recordType:\\\"SalesProducts\\\"){accountId recordType dateRecorded}}\"}" http://localhost:3000/graphql
     ```
 
 
 
-
+--------------------------------------------------------------------------------------------------------------
 Phase I – Data store selection
 We need a JSON-based data store (database), with the following requirements:
 •	Runs as Windows Service
