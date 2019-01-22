@@ -155,7 +155,7 @@ var getProducts = async(args) => {
     var recordType = args.recordType
     var pattern = recordType
     var collection = db.get().collection('customers')
-    return (await collection.find({ "recordType": {$regex:pattern } }).toArray())
+    return (await collection.find({ "recordType": pattern }).toArray())
   }
 }
 
