@@ -45,138 +45,137 @@ Express + MongoDB (Graphql API and REST API based on OData)
 
 --------------------------------------------------------------------------------------------------------------
 ## Graphql APIs
-  ### Introduction : Go to http://localhost:3000/graphql
+### Introduction : Go to http://localhost:3000/graphql
 
-    You can see Graphiql Interface
+You can see Graphiql Interface
 
-    And input below query
-    ```  
-     {
-        products(recordType:"SalesProducts"){
-          accountId
-          recordType
-          dateRecorded
-        }
-      }
-    
-    ``` 
-    And click execute button, this wil get all products that "recordType" is same as "SalesProducts"
+And input below query
+```  
+  {
+    products(recordType:"SalesProducts"){
+      accountId
+      recordType
+      dateRecorded
+    }
+  }
+```
+And click execute button, this wil get all products that "recordType" is same as "SalesProducts"
 
-    How to test this API in CURL: Open cmd and enter follows:
-    ```
-     curl -X POST -H "Content-Type:application/json" -d "{\"query\":\"{products(recordType:\\\"SalesProducts\\\"){accountId recordType dateRecorded}}\"}" http://localhost:3000/graphql
-    ```
-    Also can remove or add columns according to what you want to get Json data
-    ```  
-     {
-        products(recordType:"SalesProducts"){
-          recordType
-          dateRecorded
-        }
-      }
-    
-    ``` 
-    ```
-     curl -X POST -H "Content-Type:application/json" -d "{\"query\":\"{products(recordType:\\\"SalesProducts\\\"){recordType dateRecorded}}\"}" http://localhost:3000/graphql
-    ```
-    ```  
-     {
-        products(recordType:"SalesProducts"){
-          recordType
-          dateRecorded
-          data{
-            SalesProductId
-          }
-        }
-      }
-    
-    ``` 
-    ```
-    curl -X POST -H "Content-Type:application/json" -d "{\"query\":\"{products(recordType:\\\"SalesProducts\\\"){recordType dateRecorded data{SalesProductId}}}\"}" http://localhost:3000/graphql
-    ```
-    ```
-    {
-      products(recordType:"SalesProducts"){
-        recordType
-        dateRecorded
-        data{
-          SalesProductId
-          SalesProductName
-          SalesCategoryName
-        }
+How to test this API in CURL: Open cmd and enter follows:
+```
+  curl -X POST -H "Content-Type:application/json" -d "{\"query\":\"{products(recordType:\\\"SalesProducts\\\"){accountId recordType dateRecorded}}\"}" http://localhost:3000/graphql
+```
+Also can remove or add columns according to what you want to get Json data
+```  
+  {
+    products(recordType:"SalesProducts"){
+      recordType
+      dateRecorded
+    }
+  }
+
+``` 
+```
+  curl -X POST -H "Content-Type:application/json" -d "{\"query\":\"{products(recordType:\\\"SalesProducts\\\"){recordType dateRecorded}}\"}" http://localhost:3000/graphql
+```
+```  
+  {
+    products(recordType:"SalesProducts"){
+      recordType
+      dateRecorded
+      data{
+        SalesProductId
       }
     }
-    ```
-    ```
-    curl -X POST -H "Content-Type:application/json" -d "{\"query\":\"{products(recordType:\\\"SalesProducts\\\"){recordType dateRecorded data{SalesProductId SalesProductName SalesCategoryName}}}\"}" http://localhost:3000/graphql
-    ```
-  ### How to test Graphql API in Postman
-    For example 
-    ```
-    {
-      products(recordType:"SalesProducts"){
-        recordType
-        dateRecorded
-        data{
-          SalesProductId
-          SalesProductName
-          SalesCategoryName
-        }
-      }
+  }
+
+``` 
+```
+curl -X POST -H "Content-Type:application/json" -d "{\"query\":\"{products(recordType:\\\"SalesProducts\\\"){recordType dateRecorded data{SalesProductId}}}\"}" http://localhost:3000/graphql
+```
+```
+{
+  products(recordType:"SalesProducts"){
+    recordType
+    dateRecorded
+    data{
+      SalesProductId
+      SalesProductName
+      SalesCategoryName
     }
-    ```
-    - method : POST
-    - Headers : 
-      1. Content-Type : application/json
-      2. Accept : application/json
-    - Body : select raw
-      {"query":"{products(recordType:\"SalesProducts\"){recordType dateRecorded data{SalesProductId SalesProductName SalesCategoryName}}}"}
-  #### More Graphql APIs
-   To get products that contain substring of RecordType
-    ```
-    {
-      products(substringofRecordType:"products"){
-        accountId
-        recordType
-        dateRecorded
-        data{
-          SalesProductId
-          SalesProductName
-          SalesCategoryName
-        }
-      }
+  }
+}
+```
+```
+curl -X POST -H "Content-Type:application/json" -d "{\"query\":\"{products(recordType:\\\"SalesProducts\\\"){recordType dateRecorded data{SalesProductId SalesProductName SalesCategoryName}}}\"}" http://localhost:3000/graphql
+```
+### How to test Graphql API in Postman
+For example 
+```
+{
+  products(recordType:"SalesProducts"){
+    recordType
+    dateRecorded
+    data{
+      SalesProductId
+      SalesProductName
+      SalesCategoryName
     }
-    ```
-    To get products that start with special string of RecordType
-    ```
-    {
-      products(startswithRecordType:"sales"){
-        accountId
-        recordType
-        dateRecorded
-        data{
-          SalesProductId
-          SalesProductName
-          SalesCategoryName
-        }
-      }
+  }
+}
+```
+- method : POST
+- Headers : 
+  1. Content-Type : application/json
+  2. Accept : application/json
+- Body : select raw
+  {"query":"{products(recordType:\"SalesProducts\"){recordType dateRecorded data{SalesProductId SalesProductName SalesCategoryName}}}"}
+### More Graphql APIs
+To get products that contain substring of RecordType
+```
+{
+  products(substringofRecordType:"products"){
+    accountId
+    recordType
+    dateRecorded
+    data{
+      SalesProductId
+      SalesProductName
+      SalesCategoryName
     }
-    ```
-    To get products that end with special string of RecordType
-    ```
-    {
-      products(endswithRecordType:"products"){
-        accountId
-        recordType
-        dateRecorded
-        data{
-          SalesProductId
-          SalesProductName
-          SalesCategoryName
-        }
-      }
+  }
+}
+```
+To get products that start with special string of RecordType
+```
+{
+  products(startswithRecordType:"sales"){
+    accountId
+    recordType
+    dateRecorded
+    data{
+      SalesProductId
+      SalesProductName
+      SalesCategoryName
     }
-    ```
+  }
+}
+```
+To get products that end with special string of RecordType
+```
+{
+  products(endswithRecordType:"products"){
+    accountId
+    recordType
+    dateRecorded
+    data{
+      SalesProductId
+      SalesProductName
+      SalesCategoryName
+    }
+  }
+}
+```
 
 --------------------------------------------------------------------------------------------------------------
 Phase I – Data store selection
