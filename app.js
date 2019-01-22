@@ -97,7 +97,7 @@ var schema = buildSchema(`
     type Query {
         course(id: Int!): Course
         courses(topic: String): [Course]
-        products(recordType: String): [Product]
+        products(recordType: String, substringofRecordType: String, startswithRecordType: String, endswithRecordType: String): [Product]
     },
     type Course {
         id: Int
@@ -151,11 +151,25 @@ var updateCourseTopic = function({id, topic}) {
 }
 
 var getProducts = async(args) => {
-  if(args.recordType) {
-    var recordType = args.recordType
-    var pattern = recordType
-    var collection = db.get().collection('customers')
+  var collection = db.get().collection('customers')
+  if(args.recordType){
+    var pattern = args.recordType
     return (await collection.find({ "recordType": pattern }).toArray())
+  }
+  
+  if(args.substringofRecordType){
+    var pattern = args.substringofRecordType
+    return (await collection.find({ "recordType": {$regex: pattern} }).toArray())
+  } 
+
+  if(args.startswithRecordType){
+    var pattern =  '^' + args.startswithRecordType
+    return (await collection.find({ "recordType": {$regex: new RegExp(pattern), $options:'i' } }).toArray())
+  }
+
+  if(args.endswithRecordType){
+    var pattern =  args.endswithRecordType + '$'
+    return (await collection.find({ "recordType": {$regex: new RegExp(pattern), $options:'i' } }).toArray())
   }
 }
 
