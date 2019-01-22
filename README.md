@@ -45,7 +45,7 @@ Express + MongoDB (Graphql API and REST API based on OData)
 
 --------------------------------------------------------------------------------------------------------------
 ## Graphql APIs
-  #### Introduction : Go to http://localhost:3000/graphql
+  ### Introduction : Go to http://localhost:3000/graphql
 
     You can see Graphiql Interface
 
@@ -110,7 +110,7 @@ Express + MongoDB (Graphql API and REST API based on OData)
     ```
     curl -X POST -H "Content-Type:application/json" -d "{\"query\":\"{products(recordType:\\\"SalesProducts\\\"){recordType dateRecorded data{SalesProductId SalesProductName SalesCategoryName}}}\"}" http://localhost:3000/graphql
     ```
-  #### How to test Graphql API in Postman
+  ### How to test Graphql API in Postman
     For example 
     ```
     {
