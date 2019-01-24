@@ -176,7 +176,108 @@ To get products that end with special string of RecordType
   }
 }
 ```
+--------------------------------------------------------------------------------------------------------------
+## RESTful API based on OData
+### Introduction : Go to http://localhost:3000/odata
+We can see below result:
+```
+{"@odata.context":"http://localhost:3000/odata/$metadata","value":[{"kind":"EntitySet","name":"customers","url":"customers"}]}
+```
+Also can check Model structure of our database collection by using url http://localhost:3010/odata/$metadata
+```xml
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+  <edmx:DataServices>
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="mydb">
+      <EntityType Name="Product">
+        <Property Name="_id" Type="Edm.String"/>
+        <Property Name="accountId" Type="Edm.String"/>
+        <Property Name="recordType" Type="Edm.String"/>
+        <Property Name="dateRecorded" Type="Edm.String"/>
+        <Property Name="data" Type="Edm.Data"/>
+        <Key>
+          <PropertyRef Name="_id"/>
+        </Key>
+      </EntityType>
+      <EntityType Name="Data">
+        <Property Name="SalesProductId" Type="Edm.String"/>
+        <Property Name="SalesProductName" Type="Edm.String"/>
+        <Property Name="SalesCategoryName" Type="Edm.String"/>
+      </EntityType>
+      <ComplexType/>
+      <EntityContainer Name="Context">
+        <EntitySet EntityType="mydb.Product" Name="customers"/>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
+```
+As you can see basic model is Product that has properties _id, accountId, recordType, dateRecorded and data
 
+also data property is Data model that has properties SalesProductId, SalesProductName, SalesCategoryName
+
+There are EntitySet name, 'customers', which must be same as collection name, can figure out url as below:
+```
+http://localhost:3000/odata/customers
+```
+So we can get all data
+
+### More RESTful APIs by using OData queries
+- by using $filter 
+To get all data that recordType is same as 'SalesProducts' 
+```
+http://localhost:3000/odata/customers?$filter=recordType eq 'SalesProducts'
+```
+To get all data that recordType starts with 'Sales'
+```
+http://localhost:3000/odata/customers?$filter=startswith(recordType,'Sales')
+```
+To get all data that recordType ends with 'Products'
+```
+http://localhost:3000/odata/customers?$filter=endswith(recordType,'Sales')
+```
+To get all data that recordType has 'Product' as substring
+```
+http://localhost:3000/odata/customers?$filter=substringof(recordType,'Product')
+```
+- by using $select
+To get data of accountId and recordType
+``` 
+http://localhost:3000/odata/customers?$select=recordType,data 
+```
+To get data of accountId, recordType and data
+```
+http://localhost:3000/odata/customers?$select=accountId,recordType,data 
+```
+- by using $select
+To get data by order of recordType
+```
+http://localhost:3000/odata/customers?$orderby=recordType
+```
+To get data by ascending order of recordType
+```
+http://localhost:3000/odata/customers?$orderby=recordType desc
+```
+To get top 3 data in result
+```
+http://localhost:3000/odata/customers?$top=3
+```
+- How to use $select, $orderby and $top at the same time
+```
+http://localhost:3000/odata/customers?$select=accountId,recordType&$orderby=accountId&$top=3
+```
+- More queries
+
+To get number of result data
+```
+http://localhost:3000/odata/customers/$count
+```
+How to combine eq, or, and 
+```
+http://localhost:3000/odata/customers?$filter=recordType eq 'SalesProducts' or accountId eq '142895'
+```
+```
+http://localhost:3000/odata/customers?$filter=substringof(recordType,'Test') and accountId eq '142895'
+```
 --------------------------------------------------------------------------------------------------------------
 Phase I – Data store selection
 We need a JSON-based data store (database), with the following requirements:

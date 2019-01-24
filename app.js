@@ -4,12 +4,15 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
-
 var multer = require('multer');
 var upload = multer();
 
 var express_graphql = require('express-graphql');
 var { buildSchema } = require('graphql');
+
+var ODataServer = require("simple-odata-server");
+var Adapter = require('simple-odata-server-mongodb');
+var cors = require("cors");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -17,7 +20,7 @@ var getdataRouter = require('./routes/getdata');
 var dataset = require('./routes/dataset');
 
 var app = express();
-
+app.use(cors());
 var db = require('./db');
 var url = "mongodb://localhost:27017/";
 var dbname = "mydb";
@@ -56,6 +59,33 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+var model = {
+  namespace: "mydb",
+  entityTypes: {
+      "Product": {
+          "_id": {"type": "Edm.String", key: true},        
+          "accountId": {"type": "Edm.String"},
+          "recordType": {"type": "Edm.String"},
+          "dateRecorded": {"type": "Edm.String"},
+          "data":{"type":"Edm.Data"}                    
+      },
+      "Data": {
+          "SalesProductId": {"type": "Edm.String"},
+          "SalesProductName": {"type": "Edm.String"},
+          "SalesCategoryName": {"type": "Edm.String"}
+      }
+  },   
+  entitySets: {
+      "customers": {
+          entityType: "mydb.Product"
+      }
+  }
+};
+
+// Instantiates ODataServer and assigns to odataserver variable.
+var odataServer = new ODataServer()
+                  .model(model);
+
 var alldata
 // Connect to Mongo on start
 db.connect(url, dbname, function(err) {
@@ -68,6 +98,8 @@ db.connect(url, dbname, function(err) {
     collection.find().project({_id:0}).toArray(function(err, docs){
         alldata = docs
     })
+    var dbo = db.get();
+    odataServer.adapter(Adapter(function(cb) { cb(err, dbo); }));
   }
 })
 
@@ -159,7 +191,7 @@ var getProducts = async(args) => {
   
   if(args.substringofRecordType){
     var pattern = args.substringofRecordType
-    return (await collection.find({ "recordType": {$regex: pattern} }).toArray())
+    return (await collection.find({ "recordType": {$regex: new RegExp(pattern), $options:'i' } }).toArray())
   } 
 
   if(args.startswithRecordType){
@@ -186,5 +218,9 @@ app.use('/graphql', express_graphql({
   rootValue: root,
   graphiql: true,
 }));
+
+app.use("/odata", function (req, res) {
+  odataServer.handle(req, res);
+});
 
 module.exports = app;
