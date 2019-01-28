@@ -17,7 +17,12 @@ var cors = require("cors");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var getdataRouter = require('./routes/getdata');
-var dataset = require('./routes/dataset');
+var recordType = require('./routes/recordType');
+var accountId = require('./routes/accountId');
+var SalesProductName = require('./routes/SalesProductName');
+var SalesCategoryName = require('./routes/SalesCategoryName');
+var SalesProductId = require('./routes/SalesProductId');
+var query = require('./routes/query');
 
 var app = express();
 app.use(cors());
@@ -41,7 +46,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/getdata', getdataRouter);
-app.use('/data-set', dataset);
+app.use('/recordType', recordType);
+app.use('/accountId', accountId);
+app.use('/SalesProductName', SalesProductName);
+app.use('/SalesCategoryName', SalesCategoryName);
+app.use('/SalesProductId', SalesProductId);
+app.use('/query', query);
 
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
@@ -103,7 +113,6 @@ db.connect(url, dbname, function(err) {
   }
 })
 
-
 //---------- For test as local data ---------------
 var coursesData = [
   {
@@ -113,14 +122,6 @@ var coursesData = [
       description: 'Learn Node.js by building real-world applications with Node, Express, MongoDB, Mocha, and more!',
       topic: 'Node.js',
       url: 'https://codingthesmartway.com/courses/nodejs/'
-  },
-  {
-      id: 2,
-      title: 'Node.js, Express & MongoDB Dev to Deployment',
-      author: 'Brad Traversy',
-      description: 'Learn by example building & deploying real-world Node.js applications from absolute scratch',
-      topic: 'Node.js',
-      url: 'https://codingthesmartway.com/courses/nodejs-express-mongodb/'
   }
 ]
 
@@ -204,7 +205,6 @@ var getProducts = async(args) => {
     return (await collection.find({ "recordType": {$regex: new RegExp(pattern), $options:'i' } }).toArray())
   }
 }
-
 // Root resolver
 var root = {
   course: getCourse,
@@ -212,13 +212,13 @@ var root = {
   updateCourseTopic: updateCourseTopic,
   products: getProducts,
 };
-
+// graphql
 app.use('/graphql', express_graphql({
   schema: schema,
   rootValue: root,
   graphiql: true,
 }));
-
+// OData
 app.use("/odata", function (req, res) {
   odataServer.handle(req, res);
 });

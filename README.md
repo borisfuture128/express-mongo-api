@@ -274,10 +274,25 @@ http://localhost:3000/odata/customers/$count
 How to combine eq, or, and 
 ```
 http://localhost:3000/odata/customers?$filter=recordType eq 'SalesProducts' or accountId eq '142895'
-```
+```   
 ```
 http://localhost:3000/odata/customers?$filter=substringof(recordType,'Test') and accountId eq '142895'
 ```
+--------------------------------------------------------------------------------------------------------------
+
+## API for personal
+- accountId or recordType (require)
+- dataProductName (optional : default->substring, $-> end with, ^->start with)
+- sortBy (optional: accountId or recordType)
+- sortDir (optional: ASC or DESC)
+- fieldname (optional: accountId , recordType , dateRecorded , data)
+### POST
+- http://localhost:3000/query
+- body: form params
+### GET 
+- http://localhost:3000/query?accountId=142892&recordType=SalesProducts&dataProductName=shake&sortBy=recordType&sortDir=ASC&fieldname=accountId,recordType,dateRecorded,data
+--------------------------------------------------------------------------------------------------------------
+
 --------------------------------------------------------------------------------------------------------------
 Phase I – Data store selection
 We need a JSON-based data store (database), with the following requirements:

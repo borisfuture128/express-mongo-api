@@ -12,12 +12,12 @@ router.get('/', function(req, res, next) {
 });
 
 /* get filtered data  */
-router.get('/:recordtype', function(req, res, next) {
-    var recordtype = req.params.recordtype;
-    if(recordtype != undefined){
+router.get('/:SalesCategoryName', function(req, res, next) {
+    var SalesCategoryName = req.params.SalesCategoryName;
+    if(SalesCategoryName != undefined){
       var collection = db.get().collection('customers')
-      var pattern = recordtype
-      collection.find( { "recordType": new RegExp(pattern, 'i') }).project({_id:0}).toArray(function(err, docs){
+      var pattern = SalesCategoryName
+      collection.find( { "data.SalesCategoryName": new RegExp(pattern, 'i') }).project({_id:0}).toArray(function(err, docs){
           res.json({"result":docs})
       })
       return;
