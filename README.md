@@ -292,9 +292,12 @@ http://localhost:3000/odata/customers?$filter=substringof(recordType,'Test') and
 - http://localhost:3000/query
 - body: form params
 ### GET 
--http://localhost:3000/query?accountId=142892&recordType=SalesProducts&data.SalesProductId=$00$&sortBy=data.SalesCategoryName
-
-- http://localhost:3000/query?accountId=142892&recordType=SalesProducts&data.SalesProductId=$00&data.SalesCategoryName=sh$&sortBy=data.SalesProductId&sortDir=DESC
+```
+http://localhost:3000/query?accountId=142892&recordType=SalesProducts&data.SalesProductId=$00$&sortBy=data.SalesCategoryName
+```
+```
+ http://localhost:3000/query?accountId=142892&recordType=SalesProducts&data.SalesProductId=$00&data.SalesCategoryName=sh$&sortBy=data.SalesProductId&sortDir=DESC
+```
 
 --------------------------------------------------------------------------------------------------------------
 
