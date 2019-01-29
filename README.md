@@ -281,16 +281,21 @@ http://localhost:3000/odata/customers?$filter=substringof(recordType,'Test') and
 --------------------------------------------------------------------------------------------------------------
 
 ## API for personal
-- accountId or recordType (require)
-- dataProductName (optional : default->substring, $-> end with, ^->start with)
-- sortBy (optional: accountId or recordType)
+- accountId (require)
+- recordType (require)
+- data.SalesProductId (optional : $str, str$, $str$)
+- data.SalesProductName (optional : $str, str$, $str$)
+- data.SalesCategoryName (optional : $str, str$, $str$)
+- sortBy (optional : data.SalesProductId, data.SalesProductName, data.SalesCategoryName)
 - sortDir (optional: ASC or DESC)
-- fieldname (optional: accountId , recordType , dateRecorded , data)
 ### POST
 - http://localhost:3000/query
 - body: form params
 ### GET 
-- http://localhost:3000/query?accountId=142892&recordType=SalesProducts&dataProductName=shake&sortBy=recordType&sortDir=ASC&fieldname=accountId,recordType,dateRecorded,data
+-http://localhost:3000/query?accountId=142892&recordType=SalesProducts&data.SalesProductId=$00$&sortBy=data.SalesCategoryName
+
+- http://localhost:3000/query?accountId=142892&recordType=SalesProducts&data.SalesProductId=$00&data.SalesCategoryName=sh$&sortBy=data.SalesProductId&sortDir=DESC
+
 --------------------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------
