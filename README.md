@@ -298,7 +298,7 @@ http://localhost:3000/query?accountId=142892&recordType=SalesProducts&data.Sales
 ```
  http://localhost:3000/query?accountId=142892&recordType=SalesProducts&data.SalesProductId=$00&data.SalesCategoryName=sh$&sortBy=data.SalesProductId&sortDir=DESC
 ```
-
+If no parameters except required params(accountId and recordType), that will include all data
 --------------------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------
