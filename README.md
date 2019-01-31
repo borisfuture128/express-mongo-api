@@ -302,7 +302,8 @@ http://localhost:3000/query?accountId=222222&recordType=InventoryProductMaster&d
 ```
 http://localhost:3000/query?accountId=222222&recordType=InventoryProductMaster&data.InventoryProductName=hot$&sortBy=data.InventoryProductName&sortDir=DESC
 ```
-If no parameters except required params(accountId and recordType), that will include all data
+
+- If no parameters except required params(accountId and recordType), that will include all data
 --------------------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------
