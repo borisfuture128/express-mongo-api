@@ -283,20 +283,24 @@ http://localhost:3000/odata/customers?$filter=substringof(recordType,'Test') and
 ## API for personal
 - accountId (require)
 - recordType (require)
-- data.SalesProductId (optional : $str, str$, $str$)
-- data.SalesProductName (optional : $str, str$, $str$)
-- data.SalesCategoryName (optional : $str, str$, $str$)
-- sortBy (optional : data.SalesProductId, data.SalesProductName, data.SalesCategoryName)
+- subdocument of data (optional : $str, str$, $str$)
+- sortBy (optional)
 - sortDir (optional: ASC or DESC)
 ### POST
 - http://localhost:3000/query
 - body: form params
 ### GET 
 ```
-http://localhost:3000/query?accountId=142892&recordType=SalesProducts&data.SalesProductId=$00$&sortBy=data.SalesCategoryName
+http://localhost:3000/query?accountId=222222&recordType=InventoryProductMaster
 ```
 ```
- http://localhost:3000/query?accountId=142892&recordType=SalesProducts&data.SalesProductId=$00&data.SalesCategoryName=sh$&sortBy=data.SalesProductId&sortDir=DESC
+http://localhost:3000/query?accountId=222222&recordType=InventoryProductMaster&data.InventoryProductName=hot$
+```
+```
+http://localhost:3000/query?accountId=222222&recordType=InventoryProductMaster&data.InventoryProductName=hot$&sortBy=data.InventoryProductName
+```
+```
+http://localhost:3000/query?accountId=222222&recordType=InventoryProductMaster&data.InventoryProductName=hot$&sortBy=data.InventoryProductName&sortDir=DESC
 ```
 If no parameters except required params(accountId and recordType), that will include all data
 --------------------------------------------------------------------------------------------------------------

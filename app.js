@@ -96,7 +96,6 @@ var model = {
 var odataServer = new ODataServer()
                   .model(model);
 
-var alldata
 // Connect to Mongo on start
 db.connect(url, dbname, function(err) {
   if (err) {
@@ -104,10 +103,6 @@ db.connect(url, dbname, function(err) {
     process.exit(1)
   } else {
     console.log('Connected database...')
-    var collection = db.get().collection('customers')
-    collection.find().project({_id:0}).toArray(function(err, docs){
-        alldata = docs
-    })
     var dbo = db.get();
     odataServer.adapter(Adapter(function(cb) { cb(err, dbo); }));
   }
