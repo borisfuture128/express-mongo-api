@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../db');
+var config = require('../config');
 
 /* GET method  */
 router.get('/', function(req, res, next) {
-    var collection = db.get().collection('customers')
+    var collection = db.get().collection(config.collection)
     var accountId = req.query.accountId
     var recordType = req.query.recordType
     if(accountId == undefined || recordType == undefined){
@@ -90,7 +91,7 @@ router.get('/', function(req, res, next) {
 /* POST method  */
 router.post('/', function(req, res, next) {
     if(req.body.length == undefined){
-        var collection = db.get().collection('customers')
+        var collection = db.get().collection(config.collection)
         var accountId = req.body.accountId
         var recordType = req.body.recordType
         if(accountId == undefined || recordType == undefined){
@@ -178,7 +179,7 @@ router.post('/', function(req, res, next) {
             res.json({"result": "accountId and recordType are requried!"})
             return
         }
-        var collection = db.get().collection('customers')
+        var collection = db.get().collection(config.collection)
         var query = {accountId: accountId, recordType: recordType}
         collection.remove(query, function(error, inserted) {
             if(error){
@@ -192,7 +193,7 @@ router.post('/', function(req, res, next) {
 });
 
 function insertDocs(data){
-    var collection = db.get().collection('customers')
+    var collection = db.get().collection(config.collection)
     collection.insertMany(data, function(error, inserted) {
         if(error) {
             console.error(error)

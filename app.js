@@ -19,16 +19,14 @@ var usersRouter = require('./routes/users');
 var getdataRouter = require('./routes/getdata');
 var recordType = require('./routes/recordType');
 var accountId = require('./routes/accountId');
-var SalesProductName = require('./routes/SalesProductName');
-var SalesCategoryName = require('./routes/SalesCategoryName');
-var SalesProductId = require('./routes/SalesProductId');
 var query = require('./routes/query');
 
 var app = express();
 app.use(cors());
+var config = require('./config')
 var db = require('./db');
-var url = "mongodb://localhost:27017/";
-var dbname = "mydb";
+var url = config.url;
+var dbname = config.database;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -48,9 +46,6 @@ app.use('/users', usersRouter);
 app.use('/getdata', getdataRouter);
 app.use('/recordType', recordType);
 app.use('/accountId', accountId);
-app.use('/SalesProductName', SalesProductName);
-app.use('/SalesCategoryName', SalesCategoryName);
-app.use('/SalesProductId', SalesProductId);
 app.use('/query', query);
 
 // catch 404 and forward to error handler
@@ -70,7 +65,7 @@ app.use(function(err, req, res, next) {
 });
 
 var model = {
-  namespace: "mydb",
+  namespace: config.database,
   entityTypes: {
       "Product": {
           "_id": {"type": "Edm.String", key: true},        
@@ -86,7 +81,7 @@ var model = {
       }
   },   
   entitySets: {
-      "customers": {
+      [config.collection]: {
           entityType: "mydb.Product"
       }
   }
@@ -179,7 +174,7 @@ var updateCourseTopic = function({id, topic}) {
 }
 
 var getProducts = async(args) => {
-  var collection = db.get().collection('customers')
+  var collection = db.get().collection(config.collection)
   if(args.recordType){
     var pattern = args.recordType
     return (await collection.find({ "recordType": pattern }).toArray())

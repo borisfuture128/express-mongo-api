@@ -1,4 +1,5 @@
 var MongoClient = require('mongodb').MongoClient
+var config = require('./config')
 
 var state = {
   db: null,
@@ -11,7 +12,7 @@ exports.connect = function(url, dbname, done) {
     if (err) return done(err)
     state.db = db.db(dbname)
     //----- get data param -------
-    var collection = db.db('mydb').collection('customers')
+    var collection = db.db(config.database).collection(config.collection)
     collection.find().project({_id:0}).toArray(function(err, docs){
         docs.forEach(element => {
           for(var key in element.data){

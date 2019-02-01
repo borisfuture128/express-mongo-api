@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../db');
+var config = require('../config');
 
 /* get all data  */
 router.get('/:id', function(req, res, next) {
   var id = req.params.id;
   if(id == "all"){
-    var collection = db.get().collection('customers')
+    var collection = db.get().collection(config.collection)
     collection.find().toArray(function(err, docs) {
       res.json({"result":docs})
     })
@@ -23,7 +24,7 @@ router.get('/', function(req, res, next) {
   var DataName = req.query.DataName
   console.log("RecordType:" + RecordType)
   console.log("DataName:" + DataName)
-  var collection = db.get().collection('customers')
+  var collection = db.get().collection(config.collection)
   if(RecordType != undefined && DataName != undefined){
     // SELECT * FROM collection WHERE RecordType LIKE "%{pattern}%" AND Data.Name LIKE "%{pattern}%"  
     console.log('SELECT * FROM collection WHERE RecordType LIKE "%{pattern}%" AND Data.Name LIKE "%{pattern}%"')
@@ -67,7 +68,7 @@ router.post('/', function(req, res, next) {
     var DataName = req.body.DataName
     console.log("RecordType:" + RecordType)
     console.log("DataName:" + DataName)
-    var collection = db.get().collection('customers')
+    var collection = db.get().collection(config.collection)
     if(RecordType != undefined && DataName != undefined){
       // SELECT * FROM collection WHERE RecordType LIKE "%{pattern}%" AND Data.Name LIKE "%{pattern}%"  
       console.log('SELECT * FROM collection WHERE RecordType LIKE "%{pattern}%" AND Data.Name LIKE "%{pattern}%"')
