@@ -64,6 +64,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+var entityType = config.database + '.Product'
 var model = {
   namespace: config.database,
   entityTypes: {
@@ -82,7 +83,7 @@ var model = {
   },   
   entitySets: {
       [config.collection]: {
-          entityType: "mydb.Product"
+          entityType: entityType
       }
   }
 };
