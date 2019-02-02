@@ -8,7 +8,7 @@ var state = {
 
 exports.connect = function(url, dbname, done) {
   if (state.db) return done()
-  MongoClient.connect(url, function(err, db) {
+  MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
     if (err) return done(err)
     state.db = db.db(dbname)
     //----- get data param -------

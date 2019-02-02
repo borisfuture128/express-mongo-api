@@ -98,7 +98,7 @@ db.connect(url, dbname, function(err) {
     console.log('Unable to connect to Mongo.')
     process.exit(1)
   } else {
-    console.log('Connected database...')
+    console.log('Connected successfully database...')
     var dbo = db.get();
     odataServer.adapter(Adapter(function(cb) { cb(err, dbo); }));
   }
