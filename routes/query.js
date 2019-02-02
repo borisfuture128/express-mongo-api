@@ -54,7 +54,7 @@ router.get('/', function(req, res, next) {
             }
         }
     }
-    var field = {_id:0}
+    var field = {_id:0,accountId:0,recordType:0}
     var sort = {}
     if(sortBy != undefined){
         var a = sortBy.split('.')
@@ -74,7 +74,7 @@ router.get('/', function(req, res, next) {
                 sort = {[sortBy]:1}
             }
             collection.find(condition).project(field).sort(sort).toArray(function(err, docs){
-                res.json({"result": docs})
+                res.json({"result": getResult(accountId, recordType, docs)})
                 return
             })
         } else{
@@ -83,7 +83,7 @@ router.get('/', function(req, res, next) {
         }
     } else{
         collection.find(condition).project(field).toArray(function(err, docs){
-            res.json({"result": docs})
+            res.json({"result": getResult(accountId, recordType, docs)})
         })
     }
 });
@@ -139,7 +139,7 @@ router.post('/', function(req, res, next) {
                 }
             }
         }
-        var field = {_id:0}
+        var field = {_id:0,accountId:0,recordType:0}
         var sort = {}
         if(sortBy != undefined){
             var a = sortBy.split('.')
@@ -159,7 +159,7 @@ router.post('/', function(req, res, next) {
                     sort = {[sortBy]:1}
                 }
                 collection.find(condition).project(field).sort(sort).toArray(function(err, docs){
-                    res.json({"result": docs})
+                    res.json({"result": getResult(accountId, recordType, docs)})
                     return
                 })
             } else{
@@ -168,7 +168,7 @@ router.post('/', function(req, res, next) {
             }
         } else{
             collection.find(condition).project(field).toArray(function(err, docs){
-                res.json({"result": docs})
+                res.json({"result": getResult(accountId, recordType, docs)})
             })
         }
     } else{
@@ -204,7 +204,23 @@ function insertDocs(data){
             return "Successfully inserted: " + inserted
         }
     });
-    return "Successfully inserted:" + data.length
+    return "Successfully inserted: n = " + data.length
+}
+
+function getResult(accountId, recordType, docs){
+    var result = {
+        accountId: accountId,
+        recordType: recordType,
+        recordDate:"",
+        data:[]
+    }
+    if(docs.length > 0){
+        result.recordDate = docs[0].recordDate;
+        for(var i=0; i < docs.length ;i++){
+            result.data.push(docs[i].data)
+        }
+    }
+    return result;
 }
 
 module.exports = router;
