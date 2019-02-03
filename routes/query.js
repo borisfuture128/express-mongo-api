@@ -39,6 +39,9 @@ router.get('/', function(req, res, next) {
             pattern = pattern.split('$').join('');
             count$ = value.split('$').length - 1;
             if(count$ == 0){
+                if(parseFloat(pattern) != NaN){
+                    pattern = parseFloat(pattern)
+                }
                 condition[key] = pattern
             } 
             if(count$ == 1 && value.indexOf('$') == 0){
@@ -124,6 +127,9 @@ router.post('/', function(req, res, next) {
                 pattern = pattern.split('$').join('');
                 count$ = value.split('$').length - 1;
                 if(count$ == 0){
+                    if(parseFloat(pattern) != NaN){
+                        pattern = parseFloat(pattern)
+                    }
                     condition[key] = pattern
                 } 
                 if(count$ == 1 && value.indexOf('$') == 0){
