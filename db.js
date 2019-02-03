@@ -21,6 +21,7 @@ exports.connect = function(url, dbname, done) {
             }
           }
         });
+        state.data_params.sort();
     })
     //----- end of get data param ---
     done()

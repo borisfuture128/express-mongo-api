@@ -39,21 +39,36 @@ router.get('/', function(req, res, next) {
             pattern = pattern.split('$').join('');
             count$ = value.split('$').length - 1;
             if(count$ == 0){
-                if(parseFloat(pattern) != NaN){
+                if(!isNaN(pattern)){
                     pattern = parseFloat(pattern)
                 }
                 condition[key] = pattern
             } 
             if(count$ == 1 && value.indexOf('$') == 0){
-                pattern = pattern + '$'
-                condition[key] = new RegExp(pattern, 'i')
+                if(!isNaN(pattern)){
+                    pattern = parseFloat(pattern)
+                    condition[key] = pattern
+                } else{
+                    pattern = pattern + '$'
+                    condition[key] = new RegExp(pattern, 'i')
+                }
             }
             if(count$ == 1 && value.indexOf('$') > 0){
-                pattern = '^' + pattern
-                condition[key] = new RegExp(pattern, 'i')
+                if(!isNaN(pattern)){
+                    pattern = parseFloat(pattern)
+                    condition[key] = pattern
+                } else{
+                    pattern = '^' + pattern
+                    condition[key] = new RegExp(pattern, 'i')
+                }
             }
             if(count$ == 2){
-                condition[key] = new RegExp(pattern, 'i')
+                if(!isNaN(pattern)){
+                    pattern = parseFloat(pattern)
+                    condition[key] = pattern
+                } else{
+                    condition[key] = new RegExp(pattern, 'i')
+                }
             }
         }
     }
@@ -122,26 +137,43 @@ router.post('/', function(req, res, next) {
         condition = { accountId: accountId, recordType: recordType }
         for(var key in req.body){
             if(key.indexOf('.') >= 0){
+                console.log(key)
                 var value = req.body[key]
+                console.log(value)
                 var pattern = value
                 pattern = pattern.split('$').join('');
                 count$ = value.split('$').length - 1;
                 if(count$ == 0){
-                    if(parseFloat(pattern) != NaN){
+                    if(!isNaN(pattern)){
                         pattern = parseFloat(pattern)
                     }
                     condition[key] = pattern
                 } 
                 if(count$ == 1 && value.indexOf('$') == 0){
-                    pattern = pattern + '$'
-                    condition[key] = new RegExp(pattern, 'i')
+                    if(!isNaN(pattern)){
+                        pattern = parseFloat(pattern)
+                        condition[key] = pattern
+                    } else{
+                        pattern = pattern + '$'
+                        condition[key] = new RegExp(pattern, 'i')
+                    }
                 }
                 if(count$ == 1 && value.indexOf('$') > 0){
-                    pattern = '^' + pattern
-                    condition[key] = new RegExp(pattern, 'i')
+                    if(!isNaN(pattern)){
+                        pattern = parseFloat(pattern)
+                        condition[key] = pattern
+                    } else{
+                        pattern = '^' + pattern
+                        condition[key] = new RegExp(pattern, 'i')
+                    }
                 }
                 if(count$ == 2){
-                    condition[key] = new RegExp(pattern, 'i')
+                    if(!isNaN(pattern)){
+                        pattern = parseFloat(pattern)
+                        condition[key] = pattern
+                    } else{
+                        condition[key] = new RegExp(pattern, 'i')
+                    }
                 }
             }
         }
