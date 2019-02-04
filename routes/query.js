@@ -137,9 +137,7 @@ router.post('/', function(req, res, next) {
         condition = { accountId: accountId, recordType: recordType }
         for(var key in req.body){
             if(key.indexOf('.') >= 0){
-                console.log(key)
                 var value = req.body[key]
-                console.log(value)
                 var pattern = value
                 pattern = pattern.split('$').join('');
                 count$ = value.split('$').length - 1;
@@ -250,10 +248,15 @@ function getResult(accountId, recordType, docs){
         accountId: accountId,
         recordType: recordType,
         recordDate:"",
+        elapsedMinutes:"",
         data:[]
     }
     if(docs.length > 0){
         result.recordDate = docs[0].recordDate;
+        var current_time = new Date();
+        var record_time = new Date(result.recordDate);
+        var elapsedMinutes = (record_time - current_time)/1000/60;
+        result.elapsedMinutes = elapsedMinutes;
         for(var i=0; i < docs.length ;i++){
             result.data.push(docs[i].data)
         }
