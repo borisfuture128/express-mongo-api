@@ -305,6 +305,13 @@ http://localhost:3000/query?accountId=222222&recordType=InventoryProductMaster&d
 
 - If no parameters except required params(accountId and recordType), that will include all data
 --------------------------------------------------------------------------------------------------------------
+## Authenficate based on JWT
+### how to get token
+- URL: localhost:3000/authenticate
+- method: POST
+- param: username, password (in this project, we can use of users information in config file)
+### how to use API
+- just set access-token params in header 
 
 --------------------------------------------------------------------------------------------------------------
 Phase I – Data store selection

@@ -20,6 +20,7 @@ var getdataRouter = require('./routes/getdata');
 var recordType = require('./routes/recordType');
 var accountId = require('./routes/accountId');
 var query = require('./routes/query');
+var ProtectedRoutes = require('./routes/authenticate');
 
 var app = express();
 app.use(cors());
@@ -27,6 +28,9 @@ var config = require('./config')
 var db = require('./db');
 var url = config.url;
 var dbname = config.database;
+
+// parse application/json
+app.use(bodyParser.json());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -46,6 +50,9 @@ app.use('/users', usersRouter);
 app.use('/getdata', getdataRouter);
 app.use('/recordType', recordType);
 app.use('/accountId', accountId);
+
+app.use('/authenticate', ProtectedRoutes);
+app.use('/query', ProtectedRoutes);
 app.use('/query', query);
 
 // catch 404 and forward to error handler

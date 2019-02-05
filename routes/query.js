@@ -255,7 +255,7 @@ function getResult(accountId, recordType, docs){
         result.recordDate = docs[0].recordDate;
         var current_time = new Date();
         var record_time = new Date(result.recordDate);
-        var elapsedMinutes = (record_time - current_time)/1000/60;
+        var elapsedMinutes = (current_time - record_time)/1000/60;
         result.elapsedMinutes = elapsedMinutes;
         for(var i=0; i < docs.length ;i++){
             result.data.push(docs[i].data)
