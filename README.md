@@ -1,6 +1,3 @@
-# This is my gmail address. I will help you. Hope chat in google Hangout tonight. Thanks 
-- albertogarza204@gmail.com
-
 Express + MongoDB (Graphql API and REST API based on OData)
 
 ## Install project on Windows system 
