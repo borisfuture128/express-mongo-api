@@ -51,9 +51,9 @@ var httpsServer = https.createServer(credentials, app);
  * Listen on provided port, on all network interfaces.
  */
 
-httpsServer.listen(port);
+httpsServer.listen(port1);
 httpsServer.on('error', onError);
-httpsServer.on('listening', onListening);
+httpsServer.on('listening', onListeningHTTPS);
 //------------------------- end --------------------------------------------
 
 /**
@@ -110,6 +110,14 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+
+function onListeningHTTPS() {
+  var addr = httpsServer.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
