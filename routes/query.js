@@ -3,6 +3,8 @@ var router = express.Router();
 var db = require('../db');
 var config = require('../config');
 
+var allMatchParam_flag = false;
+
 /* GET method  */
 router.get('/', function(req, res, next) {
     var collection = db.get().collection(config.collection)
@@ -32,6 +34,16 @@ router.get('/', function(req, res, next) {
     var condition
     accountId = parseInt(accountId)
     condition = { accountId: accountId, recordType: recordType }
+    
+    for(var key in req.query){
+        if(key == "includeAllMatches"){
+            if(req.query[key] == "0"){
+                allMatchParam_flag = true;
+            } else{
+                allMatchParam_flag = false;
+            }
+        }
+    }
     for(var key in req.query){
         if(key.indexOf('.') >= 0){
             var value = req.query[key]
@@ -49,8 +61,12 @@ router.get('/', function(req, res, next) {
                     pattern = parseFloat(pattern)
                     condition[key] = pattern
                 } else{
-                    pattern = pattern + '$'
-                    condition[key] = new RegExp(pattern, 'i')
+                    if(allMatchParam_flag){
+                        condition[key] = pattern;
+                    } else{
+                        pattern = pattern + '$'
+                        condition[key] = new RegExp(pattern, 'i')
+                    }
                 }
             }
             if(count$ == 1 && value.indexOf('$') > 0){
@@ -58,8 +74,12 @@ router.get('/', function(req, res, next) {
                     pattern = parseFloat(pattern)
                     condition[key] = pattern
                 } else{
-                    pattern = '^' + pattern
-                    condition[key] = new RegExp(pattern, 'i')
+                    if(allMatchParam_flag){
+                        condition[key] = pattern;
+                    } else{
+                        pattern = '^' + pattern
+                        condition[key] = new RegExp(pattern, 'i')
+                    }
                 }
             }
             if(count$ == 2){
@@ -67,7 +87,11 @@ router.get('/', function(req, res, next) {
                     pattern = parseFloat(pattern)
                     condition[key] = pattern
                 } else{
-                    condition[key] = new RegExp(pattern, 'i')
+                    if(allMatchParam_flag){
+                        condition[key] = pattern;
+                    } else{
+                        condition[key] = new RegExp(pattern, 'i')
+                    }
                 }
             }
         }
@@ -136,6 +160,15 @@ router.post('/', function(req, res, next) {
         accountId = parseInt(accountId)
         condition = { accountId: accountId, recordType: recordType }
         for(var key in req.body){
+            if(key == "includeAllMatches"){
+                if(req.body[key] == "0"){
+                    allMatchParam_flag = true;
+                } else{
+                    allMatchParam_flag = false;
+                }
+            }
+        }
+        for(var key in req.body){
             if(key.indexOf('.') >= 0){
                 var value = req.body[key]
                 var pattern = value
@@ -152,8 +185,12 @@ router.post('/', function(req, res, next) {
                         pattern = parseFloat(pattern)
                         condition[key] = pattern
                     } else{
-                        pattern = pattern + '$'
-                        condition[key] = new RegExp(pattern, 'i')
+                        if(allMatchParam_flag){
+                            condition[key] = pattern;
+                        } else{
+                            pattern = pattern + '$'
+                            condition[key] = new RegExp(pattern, 'i')
+                        }
                     }
                 }
                 if(count$ == 1 && value.indexOf('$') > 0){
@@ -161,8 +198,12 @@ router.post('/', function(req, res, next) {
                         pattern = parseFloat(pattern)
                         condition[key] = pattern
                     } else{
-                        pattern = '^' + pattern
-                        condition[key] = new RegExp(pattern, 'i')
+                        if(allMatchParam_flag){
+                            condition[key] = pattern;
+                        } else{
+                            pattern = '^' + pattern
+                            condition[key] = new RegExp(pattern, 'i')
+                        }
                     }
                 }
                 if(count$ == 2){
@@ -170,7 +211,11 @@ router.post('/', function(req, res, next) {
                         pattern = parseFloat(pattern)
                         condition[key] = pattern
                     } else{
-                        condition[key] = new RegExp(pattern, 'i')
+                        if(allMatchParam_flag){
+                            condition[key] = pattern;
+                        } else{
+                            condition[key] = new RegExp(pattern, 'i')
+                        }
                     }
                 }
             }
@@ -258,6 +303,9 @@ function getResult(accountId, recordType, docs){
         var elapsedMinutes = (current_time - record_time)/1000/60;
         result.elapsedMinutes = elapsedMinutes;
         for(var i=0; i < docs.length ;i++){
+            // if(allMatchParam_flag == true && i > 0){
+            //     continue;
+            // }
             result.data.push(docs[i].data)
         }
     }

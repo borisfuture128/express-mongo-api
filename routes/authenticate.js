@@ -24,18 +24,18 @@ router.post('/',(req,res)=>{
             check:  true
         };
           var token = jwt.sign(payload, key, {
-              expiresIn: 60 // expires in 1 minute
+              expiresIn: 3600 // expires in 1 minute
           });
 
         res.json({
-          message: 'authentication done ',
+          message: 'authentication done',
           token: token
         });
       }else{
-          res.json({message:"please check your password !"})
+          res.json({message:"please check your password!"})
       }
   }else{
-      res.json({message:"user not found !"})
+      res.json({message:"user not found!"})
   }
 
 })
