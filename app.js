@@ -21,6 +21,7 @@ var recordType = require('./routes/recordType');
 var accountId = require('./routes/accountId');
 var query = require('./routes/query');
 var ProtectedRoutes = require('./routes/authenticate');
+var oauth2 = require('./routes/oauth2');
 
 var app = express();
 app.use(cors());
@@ -51,8 +52,9 @@ app.use('/getdata', getdataRouter);
 app.use('/recordType', recordType);
 app.use('/accountId', accountId);
 
-app.use('/authenticate', ProtectedRoutes);
-app.use('/query', ProtectedRoutes);
+//app.use('/authenticate', ProtectedRoutes);
+//app.use('/query', ProtectedRoutes);
+app.use('/query', oauth2);
 app.use('/query', query);
 
 // catch 404 and forward to error handler
