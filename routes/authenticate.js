@@ -2,73 +2,40 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 var config = require('../config');
+var _resultCode = config.result_code;
+var _displayResults = config._displayResults;
+// set secret
 
-//set secret
+var key = config.secret_key;
 
-var key = "howareyouusernamepassword";
-
-router.post('/',(req,res)=>{
-    var isExistUsername = false, isPassword = false
-    config.users.forEach(function(user){
-        if(user.username == req.body.username){
-            isExistUsername = true
-            if(user.password == req.body.password){
-                isPassword = true
-            }
-        } 
-    })
-  if(isExistUsername){
-      if(isPassword){
-           //if eveything is okey let's create our token 
-        const payload = {
-            check:  true
-        };
-          var token = jwt.sign(payload, key, {
-              expiresIn: 3600 // expires in 1 minute
-          });
-
-        res.json({
-          message: 'authentication done',
-          token: token
-        });
-      }else{
-          res.json({message:"please check your password!"})
-      }
-  }else{
-      res.json({message:"user not found!"})
-  }
-
-})
-
-router.use((req, res, next) =>{
-    // check header for the token
-    var token = req.headers['access-token'];
-
+router.use((req, res, next) => {
+  // check header for the token
+  var headers = req.headers;
+  var authorization = headers['x-pos-user-token'];
+  if (authorization) {
+    var token = authorization;
+    // var [authType, token] = authorization.split(' ');
+    // if (authType !== 'Bearer') {
+    //   res.status(401).json(_displayResults(_resultCode.EXPECTED_BEARER_TOKEN, 'Expected a Bearer token'));
+    //   return;
+    // }
     // decode token
     if (token) {
-
       // verifies secret and checks if the token is expired
-      jwt.verify(token, key, (err, decoded) =>{      
+      jwt.verify(token, key, (err, decoded) => {
         if (err) {
-          return res.json({ message: 'invalid token' });    
+          res.status(401).json(_displayResults(_resultCode.INVALID_USER_TOKEN, 'Invalid token'));
         } else {
           // if everything is good, save to request for use in other routes
-          req.decoded = decoded;   
-          console.log(decoded) 
+          req.decoded = decoded;
           next();
         }
       });
-
-    } else {
-
-      // if there is no token  
-
-      res.send({ 
-
-          message: 'No token provided.' 
-      });
-
     }
- })
+  } else {
+    // if there is no token
+    res.status(401).json(_displayResults(_resultCode.USER_TOKEN_NO_PROVIDED, 'Must set user token'));
+  }
+});
 
- module.exports = router;
+module.exports = router;

@@ -4,12 +4,12 @@ var db = require('../db');
 var config = require('../config');
 
 /* get all data  */
-router.get('/', function(req, res, next) {
-    var collection = db.get().collection(config.collection)
-    collection.find().project({_id:0}).toArray(function(err, docs){
-        console.log(docs)
-        res.json({"result":docs})
-    })
+router.get('/', function (req, res, next) {
+  var collection = db.get().collection(config.collection);
+  collection.find().project({ _id: 0 }).toArray(function (_err, docs) {
+    console.log(docs);
+    res.json({ 'result': docs });
+  });
 });
 
 /* get filtered data  */
